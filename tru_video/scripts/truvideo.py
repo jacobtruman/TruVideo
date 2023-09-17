@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import logging
-import sys
 import argparse
 
 from tru_video import TruVideo
@@ -32,6 +30,13 @@ def parse_args():
         action='store_true',
         dest='verbose',
         help='Enable verbose logging',
+    )
+
+    parser.add_argument(
+        '-p', '--purge',
+        action='store_true',
+        dest='purge',
+        help='Purge successfully converted source files',
     )
 
     parser.add_argument(
@@ -78,6 +83,7 @@ def main():
         log_level=args.log_level,
         source=args.source,
         overwrite=args.overwrite,
+        purge=args.purge,
         config_file=args.config_file,
     )
 

@@ -14,6 +14,7 @@ class TruVideo:
             log_level: str = "INFO",
             source: str = "./",
             overwrite: bool = False,
+            purge: bool = False,
             config_file: str = "~/.config/truvideo/config.json"
     ):
         self.results = {}
@@ -21,6 +22,7 @@ class TruVideo:
         self.verbose: bool = verbose
         self.source: str = source
         self.overwrite: bool = overwrite
+        self.purge: bool = purge
         self._config_file = None
         self.config_file: str = config_file
         logging.basicConfig(
@@ -74,7 +76,9 @@ class TruVideo:
         ]
 
         cmd = f"HandBrakeCLI {' '.join(params)}"
-        self.logger.info(cmd)
+        self.logger.info(f"Converting \"{input_file}\" to \"{output_file}\"")
+        if self.verbose:
+            self.logger.info(cmd)
 
         if not self.dry_run:
             proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -86,10 +90,14 @@ class TruVideo:
                 self.logger.error(f"Error converting file: {input_file}")
                 self.logger.error(retval)
                 return False
+        if self.purge:
+            self.logger.info(f"Purging {input_file}")
+            os.remove(input_file)
 
         return True
 
     def run(self):
         self.logger.info(f"Converting files in {self.source}")
-        for _file in self._get_files():
+        for index, _file in enumerate(self._get_files(), start=1):
+            self.logger.info(f"Converting file {index} / {len(self._get_files())}")
             self.results[_file] = self._convert_file(_file)
