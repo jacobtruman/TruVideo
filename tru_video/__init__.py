@@ -60,7 +60,7 @@ class TruVideo:
             elif os.path.isfile(self.source):
                 files = [self.source]
 
-        return files
+        return sorted(files)
 
     def _convert_file(self, input_file: str):
         output_file = input_file.replace(".mkv", ".mp4")
