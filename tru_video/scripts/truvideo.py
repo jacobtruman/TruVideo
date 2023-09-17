@@ -66,9 +66,6 @@ def parse_args():
 
     args = parser.parse_args()
 
-    if False:
-        parser.error("Some error")
-
     return args
 
 
@@ -86,7 +83,8 @@ def main():
 
     truvideo.run()
 
-    print(truvideo.results)
+    for video_file, result in truvideo.results.items():
+        print(f"{video_file}: processed {'successfully' if result else 'unsuccessfully'}")
 
 
 if __name__ == '__main__':
