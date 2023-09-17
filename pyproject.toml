@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = 'TruVideo'
+version = '0.0.1'
+description='A tool for converting video files from mkv to mp4'
+
+authors = [
+    {name = "Jacob Truman", email="jacob.truman@gmail.com"},
+]
+
+dependencies = []
+
+requires-python = ">=3.7, <4"
+
+[project.urls]
+homepage = "https://github.com/jacobtruman/TruVideo"
+documentation = "https://github.com/jacobtruman/TruVideo"
+repository = "https://github.com/jacobtruman/TruVideo"
+
+[project.scripts]
+truvideo = 'tru_video.scripts.truvideo:main'
